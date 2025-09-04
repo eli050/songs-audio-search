@@ -16,7 +16,13 @@ class DataAccessLayer:
     def _create_index(self):
         """Create the Elasticsearch index if it doesn't exist."""
         if not self.es_client.indices.exists(index=self.index_name):
-            self.es_client.indices.create(index=self.index_name,mappings=self.mapping)
+            self.es_client.indices.create(
+                index=self.index_name,
+                body={
+                    "mappings": self.mapping
+                }
+            )
+
             print(f"Index '{self.index_name}' created.")
         else:
             print(f"Index '{self.index_name}' already exists.")
@@ -62,7 +68,7 @@ class DataAccessLayer:
     def search_documents(self, query:dict):
         """Search documents in the Elasticsearch index based on a query."""
         try:
-            response = self.es_client.search(index=self.index_name, query=query)
+            response = self.es_client.search(index=self.index_name, body={"query": query})
             return response['hits']['hits']
         except Exception as e:
             raise RuntimeError(f"Error searching documents: {e}")

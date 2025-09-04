@@ -1,6 +1,4 @@
 faster_whisper
-elasticsearch
+elasticsearch==7.13.4
 mutagen
 streamlit
-
-

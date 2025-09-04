@@ -1,3 +1,4 @@
+import compact
 import streamlit as st
 import os
 from config import *
