@@ -15,17 +15,20 @@ st.title("🎵 Songs App")
 uploaded_file = st.file_uploader("Upload a MP3 file", type=["mp3", "wav"])
 
 if uploaded_file is not None:
-    if "last_uploaded" not in st.session_state or st.session_state.last_uploaded != uploaded_file.name:
-        file_path = os.path.join(SAVE_DIR, uploaded_file.name)
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        rmp3 = ReadMP3(file_path)
-        song_data = rmp3.read()
-        dal.create_documents([song_data])
-        st.session_state.last_uploaded = uploaded_file.name
-        st.success(f"File '{uploaded_file.name}' uploaded successfully!")
-        st.audio(file_path, format='audio/mp3')
-        st.write("You can play the uploaded song above.")
+    file_path = os.path.join(SAVE_DIR, uploaded_file.name)
+    if os.path.exists(file_path):
+        st.error(f"⚠️ File '{uploaded_file.name}' already exists!")
+    else:
+        if "last_uploaded" not in st.session_state or st.session_state.last_uploaded != uploaded_file.name:
+            with open(file_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            rmp3 = ReadMP3(file_path)
+            song_data = rmp3.read()
+            dal.create_documents([song_data])
+            st.session_state.last_uploaded = uploaded_file.name
+            st.success(f"File '{uploaded_file.name}' uploaded successfully!")
+            st.audio(file_path, format='audio/mp3')
+            st.write("You can play the uploaded song above.")
 
 search_query = st.text_input("Search for songs by title or artist or lyrics")
 if search_query:
