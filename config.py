@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch
 import streamlit as st
-
+import os
 
 
 
@@ -15,4 +15,4 @@ ES_CLIENT = Elasticsearch(
 )
 
 
-SAVE_DIR = "uploaded_songs"
+SAVE_DIR = os.path.join(os.getcwd(), "/tmp/uploaded_songs")

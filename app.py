@@ -16,10 +16,11 @@ uploaded_file = st.file_uploader("Upload a MP3 file", type=["mp3", "wav"])
 
 if uploaded_file is not None:
     file_path = os.path.join(SAVE_DIR, uploaded_file.name)
-    if os.path.exists(file_path):
-        st.error(f"⚠️ File '{uploaded_file.name}' already exists!")
-    else:
-        if "last_uploaded" not in st.session_state or st.session_state.last_uploaded != uploaded_file.name:
+    if "last_uploaded" not in st.session_state or st.session_state.last_uploaded != uploaded_file.name:
+        if os.path.exists(file_path):
+            st.write(f"File '{uploaded_file.name}' already exists you can play it below.")
+            st.audio(file_path, format='audio/mp3')
+        else:
             with open(file_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
             rmp3 = ReadMP3(file_path)
