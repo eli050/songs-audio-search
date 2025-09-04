@@ -15,4 +15,4 @@ ES_CLIENT = Elasticsearch(
 )
 
 
-SAVE_DIR = os.path.join(os.getcwd(), "/tmp/uploaded_songs")
+SAVE_DIR = os.path.join(os.getcwd(), "uploaded_songs")
