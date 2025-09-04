@@ -1,6 +1,3 @@
-
-
-
 from elasticsearch import Elasticsearch
 import streamlit as st
 
@@ -14,8 +11,7 @@ ELASTICSEARCH_INDEX = st.secrets["elasticsearch"]["index"]
 
 ES_CLIENT = Elasticsearch(
     [ES_URL],
-    verify_certs=True,
-    #verify_elasticsearch=False
+    verify_certs=True
 )
 
 
