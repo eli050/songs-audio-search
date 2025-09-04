@@ -1,4 +1,6 @@
 faster_whisper
 elasticsearch
+mutagen
+streamlit
 
 
